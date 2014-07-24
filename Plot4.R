@@ -1,6 +1,4 @@
-CoalCombustionSources <- SCC[SCC$EI.Sector == "Fuel Comb - Comm/Institutional - Coal", 
-                             ]["SCC"]
-
+CoalCombustionSources <- SCC[SCC$EI.Sector == "Fuel Comb - Comm/Institutional - Coal", ]["SCC"]
 ## Subset emissions due to coal combustion sources from 'NEI'
 emissionFromCoal <- NEI[NEI$SCC %in% CoalCombustionSources$SCC, ]
 ## Calculate the emissions due to coal each year across United States
