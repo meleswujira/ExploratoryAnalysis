@@ -1,3 +1,7 @@
+#Read the rds data for PM2.5 Emissions Data
+NEI <- readRDS("summarySCC_PM25.rds")
+#Read the rds data for Source Classification Code Table
+SCC <- readRDS("Source_Classification_Code.rds")
 CoalCombustionSources <- SCC[SCC$EI.Sector == "Fuel Comb - Comm/Institutional - Coal", ]["SCC"]
 ## Subset emissions due to coal combustion sources from 'NEI'
 emissionFromCoal <- NEI[NEI$SCC %in% CoalCombustionSources$SCC, ]
