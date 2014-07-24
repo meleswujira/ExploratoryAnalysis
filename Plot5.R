@@ -12,7 +12,7 @@ emissionFromMotorVehiclesInBaltimore <- NEI[NEI$SCC %in% motorVehicleSourceCodes
 ## Calculate the emissions due to motor vehicles in Baltimore for every year
 totalMotorVehicleEmissionsByYear <- tapply(emissionFromMotorVehiclesInBaltimore$Emissions, 
                                            emissionFromMotorVehiclesInBaltimore$year, sum)
-
+png(filename="figure/plot5.png", width=480, height=480)
 plot(totalMotorVehicleEmissionsByYear, x = rownames(totalMotorVehicleEmissionsByYear), 
      type = "n", axes = FALSE, ylab = expression("Motor Vehicle Related PM"[2.5] * 
                                                      " Emission (in tons)"), xlab = "Year", main = expression("Motor Vehicle Related PM"[2.5] * 
@@ -22,3 +22,4 @@ lines(totalMotorVehicleEmissionsByYear, x = rownames(totalMotorVehicleEmissionsB
 axis(2)
 axis(side = 1, at = seq(1999, 2008, by = 3))
 box()
+dev.off()
