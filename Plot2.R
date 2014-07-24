@@ -3,13 +3,20 @@ library(plyr)
 NEI <- readRDS("summarySCC_PM25.rds")
 #Read the rds data for Source Classification Code Table
 SCC <- readRDS("Source_Classification_Code.rds")
-#We are doing aggregate w/ filter with ddply(plyr). Baltimore is fips code 24510
-aggDataPerYear <- ddply(NEI[NEI$fips == "24510",], c("year"), 
-                        function(df)sum(df$Emissions, na.rm=TRUE))
-#Open graphics device
+Baltimore <- NEI[NEI$fips == "24510", ]
+totalPM25ByYear <- tapply(Baltimore$Emissions, Baltimore$year, sum,na.rm=TRUE)
+
+## Create plot
 png(filename="figure/plot2.png", width=480, height=480)
-#Plot the final aggregate data for Baltimore city from 1999-2008 to see if emission decreased
-plot(aggDataPerYear$year, totalPerYear$V1, type="l", xlab="Year", 
-     ylab="PM2.5 (tons)", main="PM2.5 Generated between years 1999-2008 in Baltimore City, MD")
-#shutdown graphic device
+plot(totalPM25ByYear, x = rownames(totalPM25ByYear), type = "n", axes = FALSE, 
+     ylab = expression("Total PM"[2.5] * " Emission (in tons)"), xlab = "Year", 
+     main = expression("Total PM"[2.5] * " Emission in Baltimore (1999 - 2008)"))
+points(totalPM25ByYear, x = rownames(totalPM25ByYear), pch = 16, col = "red")
+lines(totalPM25ByYear, x = rownames(totalPM25ByYear), col = "blue")
+axis(2)
+axis(side = 1, at = seq(1999, 2008, by = 3))
+box()
 dev.off()
+
+
+
